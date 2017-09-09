@@ -19,20 +19,23 @@
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:3306/test" />
+        <property name="url" value="jdbc:mysql://localhost:3306/webstore" />
         <property name="username" value="root" />
         <property name="password" value="1234" />
     </bean>
 
     <!-- Hibernate 4 SessionFactory Bean definition -->
     <bean id="sessionFactory"
-          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="packagesToScan" value="com.klaster.webstore.domain" />
         <property name="hibernateProperties">
             <props>
                 <!--<prop key="javax.persistence.validation.factory">validator</prop>-->
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+               <!-- <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>-->
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL57InnoDBDialect</prop>
+              <!-- <prop key="hibernate.dialect">org.hibernate.dialect.MySQL57Dialect</prop> To dzialalo na najnowszym hibernate ;/-->
+
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.hbm2ddl.auto">create</prop>
 
@@ -41,7 +44,7 @@
     </bean>
 
     <bean id="transactionManager"
-          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+          class="org.springframework.orm.hibernate5.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
