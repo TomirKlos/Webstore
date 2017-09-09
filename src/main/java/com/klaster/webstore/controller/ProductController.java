@@ -1,24 +1,43 @@
 package com.klaster.webstore.controller;
 
+import com.klaster.webstore.domain.Product;
 import com.klaster.webstore.domain.repository.ProductRepository;
+import com.klaster.webstore.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Created by MSI DRAGON on 2017-09-08.
  */
 
 @Controller
+@RequestMapping("/products")
 public class ProductController {
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductService productService;
 
-    @RequestMapping("/products")
+    @RequestMapping
     public String list(Model model) {
-        model.addAttribute("products", productRepository.getAllProducts());
+        model.addAttribute("products", productService.getAllProducts());
         return "products";
+    }
+
+    @RequestMapping(value="/insert", method= RequestMethod.GET)
+    public String insert() {
+        productService.create(new Product("produkt1"));
+        return "redirect:/products";
+    }
+
+    @RequestMapping(value="/put", method= RequestMethod.GET)
+    public String insertByCriteria(@RequestParam("name") String productName) {
+        productService.create(new Product(productName));
+        return "redirect:/products";
     }
 }
