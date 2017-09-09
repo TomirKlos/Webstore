@@ -10,8 +10,8 @@
     <packaging>war</packaging>
 
     <properties>
-        <hibernate.version>4.3.5.Final</hibernate.version> <!--wersja hibernate -->
-        <springframework.version>4.0.3.RELEASE</springframework.version> <!--wersja springa, wczesniej byla: 4.0.3.RELEASE // 4.2.4.RELEASE na tym nie dziala koszyk-->
+        <hibernate.version>5.0.12.Final</hibernate.version> <!--wersja hibernate byla 4.3.5.Final -->
+        <springframework.version>4.3.10.RELEASE</springframework.version> <!--wersja springa, wczesniej byla: 4.0.3.RELEASE // 4.2.4.RELEASE na tym nie dziala koszyk-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
