@@ -1,35 +1,63 @@
 package com.klaster.webstore.domain;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 /**
  * Created by MSI DRAGON on 2017-09-08.
  */
+@Entity
 public class Product {
-    private String productId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long productId;
     private String name;
+    @Transient
     private BigDecimal unitPrice;
+    @Transient
     private String description;
+    @Transient
     private String manufacturer;
+    @Transient
     private String category;
+    @Transient
     private long unitsInStock;
+    @Transient
     private long unitsInOrder;
+    @Transient
     private boolean discontinued;
+    @Transient
     private String condition;
+//TODO zmienic condition na inne bo tego nie mozna zapisac do bazy, lub dodac inna nazwe kolumny
     public Product() {
         super();
     }
-    public Product(String productId, String name, BigDecimal unitPrice) {
+    public Product(long productId, String name, BigDecimal unitPrice) {
         this.productId = productId;
         this.name = name;
         this.unitPrice = unitPrice;
     }
+    public Product(String name) {
+        this.name = name;
+    }
 
-    public String getProductId() {
+    public Product(String name, BigDecimal unitPrice, String description, String manufacturer, String category, long unitsInStock, long unitsInOrder, boolean discontinued, String condition) {
+        this.name = name;
+        this.unitPrice = unitPrice;
+        this.description = description;
+        this.manufacturer = manufacturer;
+        this.category = category;
+        this.unitsInStock = unitsInStock;
+        this.unitsInOrder = unitsInOrder;
+        this.discontinued = discontinued;
+        this.condition = condition;
+    }
+
+    public long getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(long productId) {
         this.productId = productId;
     }
 
@@ -106,28 +134,23 @@ public class Product {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Product other = (Product) obj;
-        if (productId == null) {
-            if (other.productId != null)
-                return false;
-        } else if (!productId.equals(other.productId))
-            return false;
-        return true;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+
+        Product product = (Product) o;
+
+        if (getProductId() != product.getProductId()) return false;
+        return getName().equals(product.getName());
     }
+
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((productId == null) ? 0 : productId.hashCode());
+        int result = (int) (getProductId() ^ (getProductId() >>> 32));
+        result = 31 * result + getName().hashCode();
         return result;
     }
+
     @Override
     public String toString() {
         return "Produkt [productId=" + productId + ", nazwa=" + name +"]";
