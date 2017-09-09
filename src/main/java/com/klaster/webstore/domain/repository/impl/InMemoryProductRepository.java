@@ -11,6 +11,7 @@ import java.util.List;
 /**
  * Created by MSI DRAGON on 2017-09-09.
  */
+/*
 @Repository
 public class InMemoryProductRepository implements ProductRepository{
     private List<Product> listOfProducts = new ArrayList<Product>();
@@ -38,3 +39,4 @@ public class InMemoryProductRepository implements ProductRepository{
         return listOfProducts;
     }
 }
+*/
