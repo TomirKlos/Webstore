@@ -23,7 +23,7 @@
                     <div class="caption">
                         <h3>${customer.name}</h3>
                         <p>${customer.address}</p>
-                        <p>${customer.phoneNumber} PLN</p>
+                        <p>${customer.phoneNumber} </p>
                         <p>Liczba zamowien: ${customer.noOfOrdersMade}</p>
                     </div>
                 </div>
