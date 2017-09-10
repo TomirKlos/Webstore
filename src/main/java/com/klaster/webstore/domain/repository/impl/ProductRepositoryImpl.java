@@ -66,35 +66,11 @@ public class ProductRepositoryImpl implements ProductRepository {
     @SuppressWarnings("unchecked")
     @Transactional
     public List<Product> getProductsByFilter(Map<String, List<String>> filterParams) {
-        System.out.println(filterParams.keySet());
-        System.out.println(filterParams.size());
         Criteria crit = sessionFactory.getCurrentSession().createCriteria(Product.class);
         filterParams.forEach((k, v) -> {
                     crit.add(Restrictions.in(k.toLowerCase(), v));
                 }
-
         );
-      //to smigalo
-      /*  Disjunction or = Restrictions.disjunction();
-        for (Map.Entry<String, List<String>> me : filterParams.entrySet()) {
-            String key = me.getKey();
-            List<String> valueList = me.getValue();
-            System.out.println("Key: " + key);
-
-            System.out.print("Values: ");
-            for (String s : valueList) {
-                //crit.add(Restrictions.like(key.toLowerCase(),s.toLowerCase()));
-
-                or.add(Restrictions.eq(key.toLowerCase(),s.toLowerCase()));
-
-                System.out.print(s + " ");
-            }
-        }
-        crit.add(or); */
-
-       // Criteria crit = sessionFactory.getCurrentSession().createCriteria(Product.class);
-                //crit.add(Restrictions.allEq(filterParams));
-
         return (List<Product>) crit.list();
     }
 
