@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by MSI DRAGON on 2017-09-08.
  */
@@ -31,7 +35,10 @@ public class ProductController {
 
     @RequestMapping(value="/insert", method= RequestMethod.GET)
     public String insert() {
-        productService.create(new Product("produkt1"));
+        productService.create(new Product("Produkt1", (BigDecimal.valueOf(22.0)),"Produkt jaki jest kazdy widzi", "Corpo", "Laptop", 5, 0, false, "nowy"));
+        productService.create(new Product("Produkt2", (BigDecimal.valueOf(22.0)),"Produkt jaki jest kazdy widzi", "Corpo", "Laptop", 5, 0, false, "nowy"));
+        productService.create(new Product("Produkt3", (BigDecimal.valueOf(22.0)),"Produkt jaki jest kazdy widzi", "Corpo", "Laptop", 5, 0, false, "nowy"));
+
         return "redirect:/products";
     }
 
@@ -39,5 +46,11 @@ public class ProductController {
     public String insertByCriteria(@RequestParam("name") String productName) {
         productService.create(new Product(productName));
         return "redirect:/products";
+    }
+
+    @RequestMapping(value="/read", method= RequestMethod.GET)
+    public String insertByCriteria(@RequestParam("id") long productId, Model model) {
+
+        return "products";
     }
 }
