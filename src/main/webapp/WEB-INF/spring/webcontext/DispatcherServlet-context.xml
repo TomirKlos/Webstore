@@ -33,7 +33,7 @@
             <props>
                 <!--<prop key="javax.persistence.validation.factory">validator</prop>-->
                <!-- <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>-->
-                
+
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL57InnoDBDialect</prop>
               <!-- <prop key="hibernate.dialect">org.hibernate.dialect.MySQL57Dialect</prop> To dzialalo na najnowszym hibernate ;/-->
 
