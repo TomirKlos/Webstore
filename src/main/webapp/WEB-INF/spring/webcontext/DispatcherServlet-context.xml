@@ -38,7 +38,7 @@
               <!-- <prop key="hibernate.dialect">org.hibernate.dialect.MySQL57Dialect</prop> To dzialalo na najnowszym hibernate ;/-->
 
                 <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
 
             </props>
         </property>
