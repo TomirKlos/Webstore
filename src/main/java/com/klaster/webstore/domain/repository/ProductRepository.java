@@ -14,4 +14,5 @@ public interface ProductRepository {
     void delete(Product product);
 
     List<Product> getAllProducts();
+    List<Product> getProductsByCategory(String category);
 }

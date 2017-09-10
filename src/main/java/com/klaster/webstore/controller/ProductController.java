@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,9 +36,9 @@ public class ProductController {
 
     @RequestMapping(value="/insert", method= RequestMethod.GET)
     public String insert() {
-        productService.create(new Product("Produkt1", (BigDecimal.valueOf(22.0)),"Produkt jaki jest kazdy widzi", "Corpo", "Laptop", 5, 0, false, "nowy"));
-        productService.create(new Product("Produkt2", (BigDecimal.valueOf(22.0)),"Produkt jaki jest kazdy widzi", "Corpo", "Laptop", 5, 0, false, "nowy"));
-        productService.create(new Product("Produkt3", (BigDecimal.valueOf(22.0)),"Produkt jaki jest kazdy widzi", "Corpo", "Laptop", 5, 0, false, "nowy"));
+        productService.create(new Product("Laptop1", (BigDecimal.valueOf(22.0)),"Produkt jaki jest kazdy widzi", "Corpo", "Laptop", 5, 0, false, "nowy"));
+        productService.create(new Product("Telefon2", (BigDecimal.valueOf(22.0)),"Produkt jaki jest kazdy widzi", "Corpo", "Telefon", 5, 0, false, "nowy"));
+        productService.create(new Product("Tablet3", (BigDecimal.valueOf(22.0)),"Produkt jaki jest kazdy widzi", "Corpo", "Tablet", 5, 0, false, "nowy"));
 
         return "redirect:/products";
     }
@@ -51,6 +52,12 @@ public class ProductController {
     @RequestMapping(value="/read", method= RequestMethod.GET)
     public String insertByCriteria(@RequestParam("id") long productId, Model model) {
 
+        return "products";
+    }
+
+    @RequestMapping("/{category}")
+    public String getProductsByCategory(Model model, @PathVariable("category") String productCategory) {
+        model.addAttribute("products", productService.getProductsByCategory(productCategory));
         return "products";
     }
 }
