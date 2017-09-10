@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by MSI DRAGON on 2017-09-09.
@@ -46,6 +48,11 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public List<Product> getProductsByCategory(String category) {
         return productRepository.getProductsByCategory(category);
+    }
+
+    @Transactional
+    public List<Product> getProductsByFilter(Map<String, List<String>> filterParams) {
+        return productRepository.getProductsByFilter(filterParams);
     }
 
 }

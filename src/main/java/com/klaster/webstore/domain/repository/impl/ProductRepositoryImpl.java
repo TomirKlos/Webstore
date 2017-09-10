@@ -4,6 +4,7 @@ import com.klaster.webstore.domain.Product;
 import com.klaster.webstore.domain.repository.ProductRepository;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,8 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by MSI DRAGON on 2017-09-09.
@@ -55,16 +55,52 @@ public class ProductRepositoryImpl implements ProductRepository {
     @SuppressWarnings("unchecked")
     @Transactional
     public List<Product> getProductsByCategory(String category){
-        //ArrayList<Product> product = sessionFactory.getCurrentSession().get(Product.class, category);
-       // List<Product> product = (List<Product>) sessionFactory.getCurrentSession().c;
-       // if(product.isEmpty()) throw new IllegalArgumentException("Brak produktów we wskazanej kategorii: "+ category);
-       // else return product;
         Criteria crit = sessionFactory.getCurrentSession().createCriteria(Product.class);
         crit.add(Restrictions.like("category", category));
         List<Product> product = crit.list();
-        return product;
+        if(product.isEmpty())throw new IllegalArgumentException("Brak produktów we wskazanej kategorii: "+ category);
+        else return product;
 
     }
+
+    @SuppressWarnings("unchecked")
+    @Transactional
+    public List<Product> getProductsByFilter(Map<String, List<String>> filterParams) {
+        System.out.println(filterParams.keySet());
+        System.out.println(filterParams.size());
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(Product.class);
+        filterParams.forEach((k, v) -> {
+                    crit.add(Restrictions.in(k.toLowerCase(), v));
+                }
+
+        );
+      //to smigalo
+      /*  Disjunction or = Restrictions.disjunction();
+        for (Map.Entry<String, List<String>> me : filterParams.entrySet()) {
+            String key = me.getKey();
+            List<String> valueList = me.getValue();
+            System.out.println("Key: " + key);
+
+            System.out.print("Values: ");
+            for (String s : valueList) {
+                //crit.add(Restrictions.like(key.toLowerCase(),s.toLowerCase()));
+
+                or.add(Restrictions.eq(key.toLowerCase(),s.toLowerCase()));
+
+                System.out.print(s + " ");
+            }
+        }
+        crit.add(or); */
+
+       // Criteria crit = sessionFactory.getCurrentSession().createCriteria(Product.class);
+                //crit.add(Restrictions.allEq(filterParams));
+
+        return (List<Product>) crit.list();
+    }
+
+
+
+
 
 
     //TODO Dodac implementacje UPDATE

@@ -3,6 +3,8 @@ package com.klaster.webstore.domain.repository;
 import com.klaster.webstore.domain.Product;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by MSI DRAGON on 2017-09-09.
@@ -15,4 +17,5 @@ public interface ProductRepository {
 
     List<Product> getAllProducts();
     List<Product> getProductsByCategory(String category);
+    List<Product> getProductsByFilter(Map<String, List<String>> filterParams);
 }
