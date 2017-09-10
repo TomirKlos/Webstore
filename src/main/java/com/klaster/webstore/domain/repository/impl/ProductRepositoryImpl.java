@@ -27,7 +27,10 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public Product read(long productId){
-        return (Product) sessionFactory.getCurrentSession().get(Product.class, productId);
+        //  return (Product) sessionFactory.getCurrentSession().get(Product.class, productId);
+        Product product = sessionFactory.getCurrentSession().get(Product.class, productId);
+        if(product==null) throw new IllegalArgumentException("Brak produktu o wskazanym id: "+ productId);
+        else return product;
     }
 
     @Override
@@ -44,6 +47,7 @@ public class ProductRepositoryImpl implements ProductRepository {
       //  cq.from(Product.class);
      //  return (List<Product>) sessionFactory.createEntityManager(cq).getResultList();
     }
+
 
     //TODO Dodac implementacje UPDATE
 }
