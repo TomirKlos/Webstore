@@ -12,22 +12,14 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long productId;
     private String name;
-    @Transient
     private BigDecimal unitPrice;
-    @Transient
     private String description;
-    @Transient
     private String manufacturer;
-    @Transient
     private String category;
-    @Transient
     private long unitsInStock;
-    @Transient
     private long unitsInOrder;
-    @Transient
     private boolean discontinued;
-    @Transient
-    private String condition;
+    private String conditionProduct;
 //TODO zmienic condition na inne bo tego nie mozna zapisac do bazy, lub dodac inna nazwe kolumny
     public Product() {
         super();
@@ -41,7 +33,7 @@ public class Product {
         this.name = name;
     }
 
-    public Product(String name, BigDecimal unitPrice, String description, String manufacturer, String category, long unitsInStock, long unitsInOrder, boolean discontinued, String condition) {
+    public Product(String name, BigDecimal unitPrice, String description, String manufacturer, String category, long unitsInStock, long unitsInOrder, boolean discontinued, String conditionProduct) {
         this.name = name;
         this.unitPrice = unitPrice;
         this.description = description;
@@ -50,7 +42,7 @@ public class Product {
         this.unitsInStock = unitsInStock;
         this.unitsInOrder = unitsInOrder;
         this.discontinued = discontinued;
-        this.condition = condition;
+        this.conditionProduct = conditionProduct;
     }
 
     public long getProductId() {
@@ -125,12 +117,12 @@ public class Product {
         this.discontinued = discontinued;
     }
 
-    public String getCondition() {
-        return condition;
+    public String getConditionProduct() {
+        return conditionProduct;
     }
 
-    public void setCondition(String condition) {
-        this.condition = condition;
+    public void setConditionProduct(String conditionProduct) {
+        this.conditionProduct = conditionProduct;
     }
 
     @Override
