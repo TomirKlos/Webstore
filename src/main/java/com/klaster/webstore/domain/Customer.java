@@ -19,6 +19,10 @@ public class Customer {
 
     private int noOfOrdersMade;
 
+    public Customer() {
+        super();
+    }
+
     public Customer(String name, String address, String phoneNumber) {
         this.name = name;
         this.address = address;
