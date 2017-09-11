@@ -47,7 +47,7 @@ public class ProductController {
 
     @RequestMapping(value="/read", method= RequestMethod.GET)
     public String insertByCriteria(@RequestParam("id") long productId, Model model) {
-
+    //todo strona produktu
         return "products";
     }
 
@@ -62,4 +62,10 @@ public class ProductController {
         model.addAttribute("products", productService.getProductsByFilter(filterParams));
         return "products";
     }
+    @RequestMapping("/product")
+    public String getProductById(@RequestParam("id") long productId, Model model) {
+        model.addAttribute("product", productService.read(productId));
+        return "product";
+    }
+
 }
