@@ -68,4 +68,12 @@ public class ProductController {
         return "product";
     }
 
+    //http://localhost:8080/webstore/products/tablet/price;low=200;high=400?manufacturer=Google
+
+    @RequestMapping("/{category}/{price}")
+    public String getProductByCategoryPriceManufacturer(Model model, @PathVariable("category") String productCategory, @MatrixVariable(pathVar = "price") int low, @MatrixVariable(pathVar = "price") int high, @RequestParam("manufacturer") String manufacturer){
+        model.addAttribute("products", productService.getProductByCategoryPriceManufacturer(productCategory, low, high, manufacturer));
+        return "products";
+    }
+
 }

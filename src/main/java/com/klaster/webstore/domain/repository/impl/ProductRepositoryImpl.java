@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -75,7 +76,17 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
 
-
+    @SuppressWarnings("unchecked")
+    @Transactional
+    public Set<Product> getProductByCategoryPriceManufacturer(String productCategory, int low, int high, String manufacturer) {
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(Product.class);
+        crit.add(Restrictions.like("category", productCategory));
+        crit.add(Restrictions.like("manufacturer", manufacturer));
+        crit.add(Restrictions.between("unitPrice", BigDecimal.valueOf(low), BigDecimal.valueOf(high)));
+        Set<Product> products = new HashSet<Product>();
+        products.addAll(crit.list());
+        return products;
+    }
 
 
 

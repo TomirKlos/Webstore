@@ -55,4 +55,9 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.getProductsByFilter(filterParams);
     }
 
+    @Override
+    @Transactional
+    public Set<Product> getProductByCategoryPriceManufacturer(String productCategory, int low, int high, String manufacturer) {
+        return productRepository.getProductByCategoryPriceManufacturer(productCategory, low, high, manufacturer);
+    }
 }
