@@ -51,4 +51,8 @@
 
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
 
+    <bean id= "messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="messages"/>
+    </bean>
+
 </beans>
