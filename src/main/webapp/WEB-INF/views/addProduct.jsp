@@ -57,22 +57,9 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2 col-lg-2" for="unitsInOrder">unitsInOrder</label>
-            <div class="col-lg-10">
-                <form:input id="unitsInOrder" path="unitsInOrder" type="text" class="form:input-large"/>
-            </div>
-        </div>
-        <div class="form-group">
             <label class="control-label col-lg-2" for="description">Opis</label>
             <div class="col-lg-10">
                 <form:textarea id="description" path="description" rows ="2"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-lg-2" for="discontinued">Wycofany</label>
-
-            <div class="col-lg-10">
-                <form:checkbox id="discontinued" path="discontinued"/>
             </div>
         </div>
         <div class="form-group">
