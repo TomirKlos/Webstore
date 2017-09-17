@@ -19,4 +19,5 @@ public interface ProductRepository {
     List<Product> getProductsByCategory(String category);
     List<Product> getProductsByFilter(Map<String, List<String>> filterParams);
     Set<Product> getProductByCategoryPriceManufacturer(String productCategory, int low, int high, String manufacturer);
+
 }

@@ -71,9 +71,22 @@ public class ProductController {
     //http://localhost:8080/webstore/products/tablet/price;low=200;high=400?manufacturer=Google
 
     @RequestMapping("/{category}/{price}")
-    public String getProductByCategoryPriceManufacturer(Model model, @PathVariable("category") String productCategory, @MatrixVariable(pathVar = "price") int low, @MatrixVariable(pathVar = "price") int high, @RequestParam("manufacturer") String manufacturer){
+    public String getProductByCategoryPriceManufacturer(
+            Model model, @PathVariable("category") String productCategory, @MatrixVariable(pathVar = "price") int low, @MatrixVariable(pathVar = "price") int high, @RequestParam("manufacturer") String manufacturer){
         model.addAttribute("products", productService.getProductByCategoryPriceManufacturer(productCategory, low, high, manufacturer));
         return "products";
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public String getAddNewProductForm(Model model) {
+        Product newProduct = new Product();
+        model.addAttribute("newProduct", newProduct);
+        return "addProduct";
+    }
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public String processAddNewProductForm(@ModelAttribute("newProduct") Product newProduct) {
+        productService.create(newProduct);
+        return "redirect:/products";
     }
 
 }
