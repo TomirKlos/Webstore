@@ -15,6 +15,17 @@
             <h1>Produkty</h1>
             <p>Dodaj produkty</p>
         </div>
+
+        <c:url var="logoutUrl" value="/logout"/>
+        <form action="${logoutUrl}" method="post" class="btn btn-dangerbtn-mini pull-right">
+            <input type="submit" value="Logout"/>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
+<!-- Nie dziala
+        <a href="<c:url var="logoutUrl" value="/logout"/>" class="btn btn-dangerbtn-mini pull-right">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            Wyloguj się
+        </a> -->
     </div>
 </section>
 <section class="container">
