@@ -5,6 +5,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//ressio.github.io/lazy-load-xt/dist/jquery.lazyloadxt.fadein.css">
+   <!-- <link rel="stylesheet" href="//ressio.github.io/lazy-load-xt/dist/jquery.lazyloadxt.spinner.css"> -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//raw.githubusercontent.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.js"></script>
+    <script src="//ressio.github.io/lazy-load-xt/libs/error.js"></script>
+    <script src="//ressio.github.io/lazy-load-xt/libs/jquery/jquery.js"></script>
+    <script src="//ressio.github.io/lazy-load-xt/libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="//ressio.github.io/lazy-load-xt/dist/jquery.lazyloadxt.js"></script>
     <title>Produkty</title>
 </head>
 <body>
@@ -26,10 +34,9 @@
                         <c:when test="${empty product.base64Image}">
                         </c:when>
                         <c:otherwise>
-                            <img id="profileImage" src="data:image/jpg;base64,${product.base64Image}" alt="image" style = "width:100%"/>
+                            <img id="profileImage" data-src="data:image/jpg;base64,${product.base64Image}" style = "width:100%"/>
                         </c:otherwise>
                     </c:choose>
-
                     <div class="caption">
                         <h3>${product.name}</h3>
                         <p>${product.description}</p>

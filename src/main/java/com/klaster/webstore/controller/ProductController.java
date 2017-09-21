@@ -17,7 +17,11 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.awt.image.WritableRaster;
 import java.io.*;
 import java.math.BigDecimal;
 import java.util.*;
@@ -96,7 +100,7 @@ public class ProductController {
     }
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String processAddNewProductForm(@ModelAttribute("newProduct") Product newProduct,@ModelAttribute("productImage") ProductImage image, BindingResult result, HttpServletRequest request) {
+    public String processAddNewProductForm(@ModelAttribute("newProduct") Product newProduct,@ModelAttribute("productImage") ProductImage image, BindingResult result, HttpServletRequest request) throws IOException {
         String[] suppressedFields = result.getSuppressedFields();
         if (suppressedFields.length > 0) {
             throw new RuntimeException("Próba wiązania niedozwolonych pól: " + StringUtils.arrayToCommaDelimitedString(suppressedFields));
@@ -112,9 +116,13 @@ public class ProductController {
             }
         }
         byte[] encoded = Base64.getEncoder().encode(newProduct.getImage());
+      //  img = Thumbnails.of(img)
+         //       .size(200,200)
+         //       .asBufferedImage();
         newProduct.setBase64Image(new String(encoded));
         productService.create(newProduct);
         return "redirect:/products";
+        //todo dodac miniatury zdjec zamiast plenych obrazkow do strony products
     }
 
     @InitBinder
