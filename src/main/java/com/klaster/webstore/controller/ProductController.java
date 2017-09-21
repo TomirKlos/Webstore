@@ -110,16 +110,21 @@ public class ProductController {
         if (productImage!=null && !productImage.isEmpty()) {
             try {
                 newProduct.setImage(productImage.getBytes());
+
+
+                byte[] encoded = Base64.getEncoder().encode(newProduct.getImage());
+
+                newProduct.setBase64Image(new String(encoded));
                // productImage.transferTo(new File(rootDirectory+"resources\\images\\"+ newProduct.getProductId() + ".png"));
             } catch (Exception e) {
                 throw new RuntimeException("Niepowodzenie podczas próby zapisu obrazka produktu", e);
             }
         }
-        byte[] encoded = Base64.getEncoder().encode(newProduct.getImage());
+
       //  img = Thumbnails.of(img)
          //       .size(200,200)
          //       .asBufferedImage();
-        newProduct.setBase64Image(new String(encoded));
+
         productService.create(newProduct);
         return "redirect:/products";
         //todo dodac miniatury zdjec zamiast plenych obrazkow do strony products
