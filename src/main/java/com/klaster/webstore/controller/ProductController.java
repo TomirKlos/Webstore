@@ -1,8 +1,10 @@
 package com.klaster.webstore.controller;
 
 import com.klaster.webstore.domain.Product;
+import com.klaster.webstore.domain.ProductImage;
 import com.klaster.webstore.domain.repository.ProductRepository;
 import com.klaster.webstore.service.ProductService;
+import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,7 +15,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.*;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -51,7 +56,7 @@ public class ProductController {
 
     @RequestMapping(value="/read", method= RequestMethod.GET)
     public String insertByCriteria(@RequestParam("id") long productId, Model model) {
-    //todo strona produktu
+        //todo strona produktu
         return "products";
     }
 
@@ -84,16 +89,31 @@ public class ProductController {
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String getAddNewProductForm(Model model) {
         Product newProduct = new Product();
+        ProductImage productImage = new ProductImage();
         model.addAttribute("newProduct", newProduct);
+        model.addAttribute("productImage", productImage);
         return "addProduct";
     }
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String processAddNewProductForm(@ModelAttribute("newProduct") Product newProduct, BindingResult result) {
+    public String processAddNewProductForm(@ModelAttribute("newProduct") Product newProduct,@ModelAttribute("productImage") ProductImage image, BindingResult result, HttpServletRequest request) {
         String[] suppressedFields = result.getSuppressedFields();
         if (suppressedFields.length > 0) {
             throw new RuntimeException("Próba wiązania niedozwolonych pól: " + StringUtils.arrayToCommaDelimitedString(suppressedFields));
-        } else productService.create(newProduct);
+        }
+        MultipartFile productImage = image.getProductImage();
+       // String rootDirectory = request.getSession().getServletContext().getRealPath("/");
+        if (productImage!=null && !productImage.isEmpty()) {
+            try {
+                newProduct.setImage(productImage.getBytes());
+               // productImage.transferTo(new File(rootDirectory+"resources\\images\\"+ newProduct.getProductId() + ".png"));
+            } catch (Exception e) {
+                throw new RuntimeException("Niepowodzenie podczas próby zapisu obrazka produktu", e);
+            }
+        }
+        byte[] encoded = Base64.getEncoder().encode(newProduct.getImage());
+        newProduct.setBase64Image(new String(encoded));
+        productService.create(newProduct);
         return "redirect:/products";
     }
 
