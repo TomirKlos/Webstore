@@ -21,7 +21,7 @@
             <input type="submit" value="Logout"/>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
-<!-- Nie dziala
+        <!-- Nie dziala
         <a href="<c:url var="logoutUrl" value="/logout"/>" class="btn btn-dangerbtn-mini pull-right">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             Wyloguj się
@@ -29,15 +29,17 @@
     </div>
 </section>
 <section class="container">
-    <form:form modelAttribute="newProduct" class="form-horizontal">
-    <fieldset>
+    <form:form modelAttribute="newProduct" class="form-horizontal" enctype="multipart/form-data" >
+        <fieldset>
         <legend>Dodaj nowy produkt</legend>
-      <!--  <div class="form-group">
-            <label class="control-label col-lg-2 col-lg-2" for="productId">Id produktu</label>
-            <div class="col-lg-10">
-                <form:input id="productId" path="productId" type="text" class="form:input-large"/>
-            </div>
+        <!--  <div class="form-group">
+        <label class="control-label col-lg-2 col-lg-2" for="productId">Id produktu</label>
+        <div class="col-lg-10">
+
+        <form:input id="productId" path="productId" type="text" class="form:input-large" />
+        </div>
         </div> -->
+
         <div class="form-group">
             <label class="control-label col-lg-2 col-lg-2" for="name">
                 <spring:message code="addProduct.form.name.label"/>
@@ -96,12 +98,23 @@
                 <form:radiobutton path="conditionProduct" value="odnowiony"/>Odnowiony
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-lg-offset-2 col-lg-10">
-                <input type="submit" id="btnAdd" class="btn btn-primary" value ="Dodaj"/>
+        <form:form modelAttribute="productImage" class="form-horizontal" enctype="multipart/form-data" >
+            <div class="form-group">
+                <label class="control-label col-lg-2" for="productImage">
+                    <spring:message code="addProdcut.form.productImage.label"/>
+                </label>
+                <div class="col-lg-10">
+                    <form:input id="productImage" path="productImage" type="file" class="form:input-large" />
+                </div>
             </div>
-        </div>
-    </fieldset>
+            <input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                    <input type="submit" id="btnAdd" class="btn btn-primary" value ="Dodaj"/>
+                </div>
+            </div>
+            </fieldset>
+        </form:form>
     </form:form>
 </section>
 </body>
