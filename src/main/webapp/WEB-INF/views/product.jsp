@@ -18,6 +18,18 @@
 <section class="container">
     <div class="row">
         <div class="col-md-5">
+
+            <c:choose>
+                <c:when test="${empty product.base64Image}">
+                </c:when>
+                <c:otherwise>
+                    <img id="profileImage" src="data:image/jpg;base64,${product.base64Image}" alt="image" style = "width:100%"/>
+                </c:otherwise>
+            </c:choose>
+
+        </div>
+
+        <div class="col-md-5">
             <h3>${product.name}</h3>
             <p>${product.description}</p>
             <p>
