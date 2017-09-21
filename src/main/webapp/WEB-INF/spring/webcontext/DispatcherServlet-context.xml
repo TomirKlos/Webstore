@@ -9,6 +9,11 @@
  http://www.springframework.org/schema/context/spring-context-4.0.xsd
  http://www.springframework.org/schema/mvc
  http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="10240000"/>
+    </bean>
+
+    <mvc:resources location="/resources/" mapping="/resource/**"/>
     <mvc:annotation-driven enable-matrix-variables="true"/>
     <context:component-scan base-package="com.klaster.webstore" />
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -32,10 +37,10 @@
         <property name="hibernateProperties">
             <props>
                 <!--<prop key="javax.persistence.validation.factory">validator</prop>-->
-               <!-- <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>-->
+                <!-- <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>-->
 
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL57InnoDBDialect</prop>
-              <!-- <prop key="hibernate.dialect">org.hibernate.dialect.MySQL57Dialect</prop> To dzialalo na najnowszym hibernate ;/-->
+                <!-- <prop key="hibernate.dialect">org.hibernate.dialect.MySQL57Dialect</prop> To dzialalo na najnowszym hibernate ;/-->
 
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
