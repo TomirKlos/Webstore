@@ -7,6 +7,7 @@ import com.klaster.webstore.service.ProductService;
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +17,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
@@ -29,7 +32,6 @@ import java.util.*;
 /**
  * Created by MSI DRAGON on 2017-09-08.
  */
-
 @Controller
 @RequestMapping("/products")
 public class ProductController {
@@ -128,6 +130,20 @@ public class ProductController {
         productService.create(newProduct);
         return "redirect:/products";
         //todo dodac miniatury zdjec zamiast plenych obrazkow do strony products
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String index(){
+        return "index";
+    }
+
+
+    @RequestMapping(value = "/search/search", method = RequestMethod.GET) //, produces = "application/json"
+    @ResponseBody
+    public List<String> search(Model model, HttpServletRequest request, HttpServletResponse response){
+       // model.addAttribute("index", productService.search(request.getParameter("term")));
+
+        return productService.search(request.getParameter("term"));
     }
 
     @InitBinder

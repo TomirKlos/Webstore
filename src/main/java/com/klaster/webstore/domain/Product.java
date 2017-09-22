@@ -3,6 +3,8 @@ package com.klaster.webstore.domain;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.math.BigDecimal;
 
 /**
@@ -162,7 +164,6 @@ public class Product {
     public void setConditionProduct(String conditionProduct) {
         this.conditionProduct = conditionProduct;
     }
-
     public MultipartFile getProductImage() {
         return productImage;
     }

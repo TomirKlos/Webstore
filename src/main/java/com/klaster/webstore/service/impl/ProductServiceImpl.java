@@ -60,4 +60,10 @@ public class ProductServiceImpl implements ProductService {
     public Set<Product> getProductByCategoryPriceManufacturer(String productCategory, int low, int high, String manufacturer) {
         return productRepository.getProductByCategoryPriceManufacturer(productCategory, low, high, manufacturer);
     }
+
+    @Override
+    @Transactional
+    public List<String> search(String productName){
+        return productRepository.search(productName);
+    }
 }

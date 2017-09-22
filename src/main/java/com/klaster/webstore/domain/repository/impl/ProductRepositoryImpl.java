@@ -3,9 +3,11 @@ package com.klaster.webstore.domain.repository.impl;
 import com.klaster.webstore.domain.Product;
 import com.klaster.webstore.domain.repository.ProductRepository;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -86,6 +88,18 @@ public class ProductRepositoryImpl implements ProductRepository {
         Set<Product> products = new HashSet<Product>();
         products.addAll(crit.list());
         return products;
+    }
+
+    public List<String> search(String productName){
+        try{ if(sessionFactory.getCurrentSession().getTransaction().getStatus() != TransactionStatus.ACTIVE)
+            sessionFactory.getCurrentSession().getTransaction().begin();
+            Query query = sessionFactory.getCurrentSession().createQuery("select name from Product where name like :name");
+            query.setString("name",productName + "%");
+            System.out.println(query.list().toString());
+            return query.list();
+        }catch(Exception e){
+            return null;
+        }
     }
 
 
