@@ -2,6 +2,7 @@ package com.klaster.webstore.domain.repository.impl;
 
 import com.klaster.webstore.domain.Product;
 import com.klaster.webstore.domain.repository.ProductRepository;
+import com.klaster.webstore.exception.ProductNotFoundException;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
@@ -36,7 +37,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     public Product read(long productId){
         //  return (Product) sessionFactory.getCurrentSession().get(Product.class, productId);
         Product product = sessionFactory.getCurrentSession().get(Product.class, productId);
-        if(product==null) throw new IllegalArgumentException("Brak produktu o wskazanym id: "+ productId);
+        if(product==null) throw new ProductNotFoundException(productId);
         else return product;
     }
 

@@ -4,6 +4,7 @@ import com.klaster.webstore.domain.Product;
 import com.klaster.webstore.domain.ProductImage;
 import com.klaster.webstore.domain.repository.ProductRepository;
 import com.klaster.webstore.exception.NoProductsFoundUnderCategoryException;
+import com.klaster.webstore.exception.ProductNotFoundException;
 import com.klaster.webstore.service.ProductService;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import net.coobird.thumbnailator.Thumbnails;
@@ -19,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.imageio.ImageIO;
@@ -152,6 +154,16 @@ public class ProductController {
         return productService.search(request.getParameter("term"));
     }
 
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ModelAndView handleError(HttpServletRequest req, ProductNotFoundException exception) {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("invalidProductId", exception.getProductId());
+        mav.addObject("exception", exception);
+        mav.addObject("url", req.getRequestURL()+"?"+req.getQueryString());
+        mav.setViewName("productNotFound");
+        return mav;
+    }
 
     @InitBinder
     public void initialiseBinder(WebDataBinder binder) {
