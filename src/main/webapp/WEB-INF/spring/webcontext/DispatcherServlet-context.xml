@@ -60,6 +60,9 @@
         <property name="basename" value="messages"/>
     </bean>
 
+    <mvc:interceptors>
+        <bean class="com.klaster.webstore.interceptor.PerformanceMonitorInterceptor"/>
+    </mvc:interceptors>
 
 
 
