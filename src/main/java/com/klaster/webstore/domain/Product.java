@@ -3,6 +3,7 @@ package com.klaster.webstore.domain;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.math.BigDecimal;
@@ -15,11 +16,16 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long productId;
+    @Size(min=3, max=50, message="{Size.Product.name.validation}")
     private String name;
+    @Min(value=0, message="{Min.Product.unitPrice.validation}")
+    @Digits(integer=8, fraction=2, message="{Digits.Product.unitPrice.validation}")
+    @NotNull(message= "{NotNull.Product.unitPrice.validation}")
     private BigDecimal unitPrice;
     private String description;
     private String manufacturer;
     private String category;
+    @Min(value=1, message="Min.Product.unitPrice.validation}")
     private long unitsInStock;
     private long unitsInOrder;
     private boolean discontinued;

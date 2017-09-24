@@ -14,7 +14,7 @@
     </bean>
 
     <mvc:resources location="/resources/" mapping="/resource/**"/>
-    <mvc:annotation-driven enable-matrix-variables="true"/>
+    <mvc:annotation-driven enable-matrix-variables="true" validator="validator"/>
     <context:component-scan base-package="com.klaster.webstore" />
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/" />
@@ -81,6 +81,10 @@
             <property name="offerRedirect" value="products"/>
         </bean>
     </mvc:interceptors>
+
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="validationMessageSource" ref="messageSource" />
+    </bean>
 
 
 
