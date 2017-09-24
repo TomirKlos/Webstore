@@ -17,8 +17,8 @@
         </div>
 
         <c:url var="logoutUrl" value="/logout"/>
-        <form action="${logoutUrl}" method="post" class="btn btn-dangerbtn-mini pull-right">
-            <input type="submit" value="Logout"/>
+        <form action="${logoutUrl}" method="post" >
+            <input type="submit" value="Logout" class="btn btn-danger btn-mini pull-right"/>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
 
@@ -117,7 +117,10 @@
             <input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
             <div class="form-group">
                 <div class="col-lg-offset-2 col-lg-10">
-                    <input type="submit" id="btnAdd" class="btn btn-primary" value ="Dodaj"/>
+                    <a href="<spring:url value="/products" />" class="btn btn-primary">
+                        <span class="glyphicon-hand-left glyphicon"></span> produkty
+                    </a>
+                    <input type="submit" id="btnAdd" class="btn btn-success" value ="Dodaj"/>
                 </div>
             </div>
             </fieldset>

@@ -75,6 +75,11 @@
             <property name="paramName" value="language"/>
         </bean>
         <bean class= "com.klaster.webstore.interceptor.AuditingInterceptor"/>
+        <bean class="com.klaster.webstore.interceptor.PromoCodeInterceptor">
+            <property name="promoCode" value="OFERTA"/>
+            <property name="errorRedirect" value="invalidPromoCode"/>
+            <property name="offerRedirect" value="products"/>
+        </bean>
     </mvc:interceptors>
 
 
