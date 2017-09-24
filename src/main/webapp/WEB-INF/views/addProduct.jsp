@@ -21,6 +21,10 @@
             <input type="submit" value="Logout"/>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
+
+        <div class="pull-right" style="padding-right:50px">
+            <a href="?language=pl" >polski</a>|<a href="?language=en">english</a>
+        </div>
         <!-- Nie dziala
         <a href="<c:url var="logoutUrl" value="/logout"/>" class="btn btn-dangerbtn-mini pull-right">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -93,15 +97,18 @@
                 <spring:message code="addProduct.form.conditionProduct.label"/>
             </label>
             <div class="col-lg-10">
-                <form:radiobutton path="conditionProduct" value="nowy" />Nowy
-                <form:radiobutton path="conditionProduct" value="uzywany" />Używany
-                <form:radiobutton path="conditionProduct" value="odnowiony"/>Odnowiony
+                <form:radiobutton path="conditionProduct" value="nowy" />
+                <spring:message code="addProduct.form.conditionProductNew.label"/>
+                <form:radiobutton path="conditionProduct" value="uzywany" />
+                <spring:message code="addProduct.form.conditionProductUsed.label"/>
+                <form:radiobutton path="conditionProduct" value="odnowiony"/>
+                <spring:message code="addProduct.form.conditionProductRefurbished.label"/>
             </div>
         </div>
         <form:form modelAttribute="productImage" class="form-horizontal" enctype="multipart/form-data" >
             <div class="form-group">
                 <label class="control-label col-lg-2" for="productImage">
-                    <spring:message code="addProdcut.form.productImage.label"/>
+                    <spring:message code="addProduct.form.productImage.label"/>
                 </label>
                 <div class="col-lg-10">
                     <form:input id="productImage" path="productImage" type="file" class="form:input-large" />
