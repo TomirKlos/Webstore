@@ -3,7 +3,9 @@ package com.klaster.webstore.controller;
 import com.klaster.webstore.domain.Product;
 import com.klaster.webstore.domain.ProductImage;
 import com.klaster.webstore.domain.repository.ProductRepository;
+import com.klaster.webstore.exception.NoProductsFoundUnderCategoryException;
 import com.klaster.webstore.service.ProductService;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -67,8 +69,14 @@ public class ProductController {
     }
 
     @RequestMapping("/{category}")
-    public String getProductsByCategory(Model model, @PathVariable("category") String productCategory) {
-        model.addAttribute("products", productService.getProductsByCategory(productCategory));
+    public String getProductsByCategory(Model model, @PathVariable("category") String productCategory) throws NoProductsFoundUnderCategoryException {
+        List<Product> products = new ArrayList<Product>();
+        try{
+            products = productService.getProductsByCategory(productCategory);
+        } catch(IllegalArgumentException e) {
+            throw new NoProductsFoundUnderCategoryException();
+        }
+        model.addAttribute("products", products);
         return "products";
     }
 
@@ -140,11 +148,10 @@ public class ProductController {
 
     @RequestMapping(value = "/search/search", method = RequestMethod.GET) //, produces = "application/json"
     @ResponseBody
-    public List<String> search(Model model, HttpServletRequest request, HttpServletResponse response){
-       // model.addAttribute("index", productService.search(request.getParameter("term")));
-
+    public List<String> search(Model model, HttpServletRequest request){
         return productService.search(request.getParameter("term"));
     }
+
 
     @InitBinder
     public void initialiseBinder(WebDataBinder binder) {
