@@ -86,6 +86,16 @@
         <property name="validationMessageSource" ref="messageSource" />
     </bean>
 
+    <bean id="productValidator" class="com.klaster.webstore.validator.ProductValidator">
+        <property name = "springValidators">
+            <set>
+                <ref bean = "unitsInStockValidator"/>
+                <ref bean = "productImageValidator"/>
+            </set>
+        </property>
+    </bean>
+    <bean id="unitsInStockValidator" class="com.klaster.webstore.validator.UnitsInStockValidator"/>
+    <bean id="productImageValidator" class="com.klaster.webstore.validator.ProductImageValidator"/>
 
 
 

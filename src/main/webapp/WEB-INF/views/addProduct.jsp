@@ -42,6 +42,7 @@
         <div class="col-lg-10">
 
         <form:input id="productId" path="productId" type="text" class="form:input-large" />
+        <form:errors path="productId" cssClass="text-danger"/>
         </div>
         </div> -->
 
