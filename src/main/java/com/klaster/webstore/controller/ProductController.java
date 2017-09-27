@@ -6,6 +6,8 @@ import com.klaster.webstore.domain.repository.ProductRepository;
 import com.klaster.webstore.exception.NoProductsFoundUnderCategoryException;
 import com.klaster.webstore.exception.ProductNotFoundException;
 import com.klaster.webstore.service.ProductService;
+import com.klaster.webstore.validator.ProductValidator;
+import com.klaster.webstore.validator.UnitsInStockValidator;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,8 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ProductValidator productValidator;
 
     @RequestMapping
     public String list(Model model) {
@@ -125,11 +129,8 @@ public class ProductController {
        // String rootDirectory = request.getSession().getServletContext().getRealPath("/");
         if (productImage!=null && !productImage.isEmpty()) {
             try {
-                newProduct.setImage(productImage.getBytes());
-
-
+                newProduct.setImage(productImage.getBytes()); //todo to w sumie nie potrzebne
                 byte[] encoded = Base64.getEncoder().encode(newProduct.getImage());
-
                 newProduct.setBase64Image(new String(encoded));
                // productImage.transferTo(new File(rootDirectory+"resources\\images\\"+ newProduct.getProductId() + ".png"));
             } catch (Exception e) {
@@ -174,9 +175,15 @@ public class ProductController {
         return "invalidPromoCode";
     }
 
-    @InitBinder
+    @InitBinder("product")
     public void initialiseBinder(WebDataBinder binder) {
         binder.setDisallowedFields("unitsInOrder", "discontinued");
+        binder.setValidator(productValidator);
     }
+
+  //  @InitBinder("Product")
+  //  public void initBinder(WebDataBinder binder) {
+   //
+  //  }
 
 }
