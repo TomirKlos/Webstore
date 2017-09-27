@@ -7,10 +7,15 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="/resource/js/controllers.js"></script>
     <title>Produkt</title>
+
+
+
 </head>
 <body>
 <section>
@@ -21,6 +26,30 @@
     </div>
 </section>
 <section class="container" ng-app="cartApp">
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Sukces! Produkt został dodany do koszyka</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Nazwa:<b>${product.name}</b> <br> Cena za sztukę: <b>${product.unitPrice}PLN </b></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
     <div class="row">
         <div class="col-md-5">
 
@@ -53,7 +82,7 @@
 
 
             <p ng-controller="cartCtrl">
-                <a href="#" class="btn btn-warning btn-large" ng-click="addToCart('${product.productId}')">
+                <a href="#" class="btn btn-warning btn-large" ng-click="addToCart('${product.productId}')" data-toggle="modal" data-target="#myModal">
                     <span class="glyphicon-shopping-cart glyphicon"></span> Zamów teraz </a>
 
 
