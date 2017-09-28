@@ -14,6 +14,7 @@ import java.math.BigDecimal;
  */
 @Entity
 public class Product implements Serializable{
+    @Transient
     private static final long serialVersionUID = -981621208366571343L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

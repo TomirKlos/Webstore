@@ -53,6 +53,13 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label class="control-label col-lg-2" for="areaName">miejscowość</label>
+                <div class="col-lg-10">
+                    <form:input id="areaName" path="shippingAddress.areaName" type="text"
+                                class="form:input-large" />
+                </div>
+            </div>
 
             <div class="form-group">
                 <label class="control-label col-lg-2" for="state">województwo</label>
