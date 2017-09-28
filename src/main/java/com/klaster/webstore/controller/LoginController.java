@@ -23,4 +23,10 @@ public class LoginController {
     public String logout(Model model) {
         return "login";
     }
+
+    @RequestMapping(value="/testt", method = RequestMethod.GET)
+    public String testt(Model model) {
+        return "testt";
+    }
+
 }
