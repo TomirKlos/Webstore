@@ -1,5 +1,6 @@
 package com.klaster.webstore.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,7 +8,8 @@ import java.util.Map;
 /**
  * Created by MSI DRAGON on 2017-09-27.
  */
-public class Cart {
+public class Cart implements Serializable {
+    private static final long serialVersionUID = 1140764065754540932L;
     private String cartId;
     private Map<Long,CartItem> cartItems;
     private BigDecimal grandTotal;

@@ -6,13 +6,15 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  * Created by MSI DRAGON on 2017-09-08.
  */
 @Entity
-public class Product {
+public class Product implements Serializable{
+    private static final long serialVersionUID = -981621208366571343L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long productId;

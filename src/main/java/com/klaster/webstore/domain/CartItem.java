@@ -1,11 +1,13 @@
 package com.klaster.webstore.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  * Created by MSI DRAGON on 2017-09-27.
  */
-public class CartItem {
+public class CartItem implements Serializable {
+    private static final long serialVersionUID = 2872745480348788449L;
     private Product product;
     private int quantity;
     private BigDecimal totalPrice;

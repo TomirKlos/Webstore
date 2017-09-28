@@ -4,23 +4,26 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * Created by MSI DRAGON on 2017-09-10.
  */
 @Entity
-public class Customer {
+public class Customer implements Serializable{
+    private static final long serialVersionUID = -1178579046282516982L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long customerId;
     private String name;
     private String address;
     private String phoneNumber;
-
+    private Address billingAddress;
     private int noOfOrdersMade;
 
     public Customer() {
         super();
+        this.billingAddress = new Address();
     }
 
     public Customer(String name, String address, String phoneNumber) {
@@ -67,6 +70,14 @@ public class Customer {
 
     public void setNoOfOrdersMade(int noOfOrdersMade) {
         this.noOfOrdersMade = noOfOrdersMade;
+    }
+
+    public Address getBillingAddress() {
+        return billingAddress;
+    }
+
+    public void setBillingAddress(Address billingAddress) {
+        this.billingAddress = billingAddress;
     }
 
     @Override
