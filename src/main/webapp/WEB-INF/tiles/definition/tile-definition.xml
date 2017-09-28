@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+    <definition name="baseLayout" template="/WEB-INF/tiles/template/baseLayout.jsp">
+        <put-attribute name="title" value="Przykładowy tytuł" />
+        <put-attribute name="heading" value="" />
+        <put-attribute name="tagline" value="" />
+        <put-attribute name="navigation" value="/WEB-INF/tiles/template/navigation.jsp" />
+        <put-attribute name="content" value="" />
+        <put-attribute name="footer" value="/WEB-INF/tiles/template/footer.jsp" />
+    </definition>
+
+    <definition name="welcome" extends="baseLayout">
+        <put-attribute name="title" value="Produkty" />
+        <put-attribute name="heading" value="Produkty" />
+        <put-attribute name="tagline" value="Dostępne produkty" />
+        <put-attribute name="content" value="/WEB-INF/views/products.jsp" />
+    </definition>
+
+    <definition name="products" extends="baseLayout">
+        <put-attribute name="title" value="Produkty" />
+        <put-attribute name="heading" value="Produkty" />
+        <put-attribute name="tagline" value="Dostępne produkty" />
+        <put-attribute name="content" value="/WEB-INF/views/products.jsp" />
+    </definition>
+
+    <definition name="product" extends="baseLayout">
+        <put-attribute name="title" value="Produkty" />
+        <put-attribute name="heading" value="Produkty" />
+        <put-attribute name="tagline" value="Produkt" />
+        <put-attribute name="content" value="/WEB-INF/views/product.jsp" />
+    </definition>
+
+    <definition name="addProduct" extends="baseLayout">
+        <put-attribute name="title" value="Produkty" />
+        <put-attribute name="heading" value="Produkty" />
+        <put-attribute name="tagline" value="Produkt" />
+        <put-attribute name="content" value="/WEB-INF/views/addProduct.jsp" />
+    </definition>
+
+    <definition name="login" extends="baseLayout">
+        <put-attribute name="title" value="Zaloguj się" />
+        <put-attribute name="heading" value="Zaloguj się" />
+        <put-attribute name="tagline" value="Wprowadź nazwę użytkownika i hasło" />
+        <put-attribute name="content" value="/WEB-INF/views/login.jsp" />
+    </definition>
+
+    <definition name="cart" extends="baseLayout">
+        <put-attribute name="title" value="Koszyk" />
+        <put-attribute name="heading" value="Koszyk" />
+        <put-attribute name="tagline" value="Twój koszyk" />
+        <put-attribute name="content" value="/WEB-INF/views/cart.jsp" />
+    </definition>
+
+    <definition name="collectCustomerInfo" extends="baseLayout">
+        <put-attribute name="title" value="Dane klienta" />
+        <put-attribute name="heading" value="Dane klienta" />
+        <put-attribute name="content" value="/WEB-INF/flows/checkout/collectCustomerInfo.jsp" />
+    </definition>
+
+    <definition name="collectShippingDetail" extends="baseLayout">
+        <put-attribute name="title" value="Dane do wysyłki" />
+        <put-attribute name="heading" value="Dane do wysyłki" />
+        <put-attribute name="content" value="/WEB-INF/flows/checkout/collectShippingDetail.jsp" />
+    </definition>
+
+    <definition name="orderConfirmation" extends="baseLayout">
+        <put-attribute name="title" value="Potwierdzenie zamówienia" />
+        <put-attribute name="heading" value="Potwierdzenie zamówienia" />
+        <put-attribute name="content" value="/WEB-INF/flows/checkout/orderConfirmation.jsp" />
+    </definition>
+
+    <definition name="InvalidCartWarning" extends="baseLayout">
+        <put-attribute name="title" value="Błędny koszyk" />
+        <put-attribute name="heading" value="Błędny koszyk" />
+        <put-attribute name="content" value="/WEB-INF/flows/checkout/InvalidCartWarning.jsp" />
+    </definition>
+
+    <definition name="thankCustomer" extends="baseLayout">
+        <put-attribute name="title" value="Dziękuję" />
+        <put-attribute name="heading" value="Dziękuję" />
+        <put-attribute name="content" value="/WEB-INF/flows/checkout/thankCustomer.jsp" />
+    </definition>
+
+    <definition name="NoProductsFoundUnderSearchTerm" extends="baseLayout">
+        <put-attribute name="title" value="Produkty" />
+        <put-attribute name="heading" value="Produkty" />
+        <put-attribute name="tagline" value="Brak wyszukanych produktów :(" />
+        <put-attribute name="content" value="/WEB-INF/views/NoProductsFoundUnderSearchTerm.jsp" />
+    </definition>
+
+</tiles-definitions>
