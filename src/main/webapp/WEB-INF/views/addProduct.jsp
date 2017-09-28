@@ -2,20 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-    <title>Produkty</title>
-</head>
-<body>
-<section>
-    <div class="jumbotron">
-        <div class="container">
-            <h1>Produkty</h1>
-            <p>Dodaj produkty</p>
-        </div>
 
+
+    <title>Produkty</title>
         <c:url var="logoutUrl" value="/logout"/>
         <form action="${logoutUrl}" method="post" >
             <input type="submit" value="Logout" class="btn btn-danger btn-mini pull-right"/>
@@ -30,8 +19,7 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             Wyloguj się
         </a> -->
-    </div>
-</section>
+
 <section class="container">
     <form:form modelAttribute="newProduct" class="form-horizontal" enctype="multipart/form-data" >
         <form:errors path="*" cssClass="alert alert-danger" element="div"/>
@@ -132,5 +120,3 @@
         </form:form>
     </form:form>
 </section>
-</body>
-</html>

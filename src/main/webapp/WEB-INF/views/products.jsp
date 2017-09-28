@@ -1,10 +1,6 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//ressio.github.io/lazy-load-xt/dist/jquery.lazyloadxt.fadein.css">
    <!-- <link rel="stylesheet" href="//ressio.github.io/lazy-load-xt/dist/jquery.lazyloadxt.spinner.css"> -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -14,9 +10,8 @@
     <script src="//ressio.github.io/lazy-load-xt/libs/jquery/jquery.js"></script>
     <script src="//ressio.github.io/lazy-load-xt/libs/bootstrap/js/bootstrap.min.js"></script>
     <script src="//ressio.github.io/lazy-load-xt/dist/jquery.lazyloadxt.js"></script>
-    <title>Produkty</title>
 
-       <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
+
        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.js"></script>
        <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/base/jquery-ui.css">
        <!-- //code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css -->
@@ -66,19 +61,6 @@
 
                                     </style>
 
-</head>
-<body>
-<section>
-    <div class="jumbotron">
-        <div class="container">
-            <h1>Produkty</h1>
-            <p>Wszystkie produkty dostępne w naszym sklepie</p>
-             Wyszukaj  <input type="text" id="productName">
-
-
-        </div>
-    </div>
-</section>
 <section class="container">
     <div class="row">
         <c:forEach items="${products}" var="product">
@@ -110,5 +92,3 @@
         </c:forEach>
     </div>
 </section>
-</body>
-</html>
