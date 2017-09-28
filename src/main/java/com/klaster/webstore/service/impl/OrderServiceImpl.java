@@ -1,7 +1,10 @@
 package com.klaster.webstore.service.impl;
 
+import com.klaster.webstore.domain.Order;
 import com.klaster.webstore.domain.Product;
+import com.klaster.webstore.domain.repository.OrderRepository;
 import com.klaster.webstore.domain.repository.ProductRepository;
+import com.klaster.webstore.service.CartService;
 import com.klaster.webstore.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,6 +19,10 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     @Qualifier("ProductRepository")
     private ProductRepository productRepository;
+    @Autowired
+    private OrderRepository orderRepository;
+    @Autowired
+    private CartService cartService;
 
     @Override
     @Transactional
@@ -25,5 +32,11 @@ public class OrderServiceImpl implements OrderService {
             throw new IllegalArgumentException("Zbyt mało towaru. Obecna liczba sztuk w magazynie: " + productById.getUnitsInStock());
         }
         productById.setUnitsInStock(productById.getUnitsInStock() - count);
+    }
+
+    public Long saveOrder(Order order) {
+        Long orderId = orderRepository.saveOrder(order);
+        cartService.delete(order.getCart().getCartId());
+        return orderId;
     }
 }
