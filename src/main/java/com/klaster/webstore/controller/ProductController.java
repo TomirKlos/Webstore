@@ -4,6 +4,7 @@ import com.klaster.webstore.domain.Product;
 import com.klaster.webstore.domain.ProductImage;
 import com.klaster.webstore.domain.repository.ProductRepository;
 import com.klaster.webstore.exception.NoProductsFoundUnderCategoryException;
+import com.klaster.webstore.exception.NoProductsFoundUnderSearchTerm;
 import com.klaster.webstore.exception.ProductNotFoundException;
 import com.klaster.webstore.service.ProductService;
 import com.klaster.webstore.validator.ProductValidator;
@@ -53,6 +54,13 @@ public class ProductController {
         model.addAttribute("products", productService.getAllProducts());
         return "products";
     }
+
+    @RequestMapping(value="/searchByName", method= RequestMethod.GET)
+    public String searchName(@RequestParam("search") String search, Model model){
+        model.addAttribute("products", productService.searchName(search));
+        return "products";
+    }
+
 
     @RequestMapping(value="/insert", method= RequestMethod.GET)
     public String insert() {
@@ -167,6 +175,13 @@ public class ProductController {
         mav.addObject("exception", exception);
         mav.addObject("url", req.getRequestURL()+"?"+req.getQueryString());
         mav.setViewName("productNotFound");
+        return mav;
+    }
+
+    @ExceptionHandler(NoProductsFoundUnderSearchTerm.class)
+    public ModelAndView handleErrorNoProductFoundUnderSearchTerm(HttpServletRequest req, NoProductsFoundUnderSearchTerm exception) {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("NoProductsFoundUnderSearchTerm");
         return mav;
     }
 

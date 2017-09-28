@@ -2,11 +2,13 @@ package com.klaster.webstore.domain.repository.impl;
 
 import com.klaster.webstore.domain.Product;
 import com.klaster.webstore.domain.repository.ProductRepository;
+import com.klaster.webstore.exception.NoProductsFoundUnderSearchTerm;
 import com.klaster.webstore.exception.ProductNotFoundException;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,6 +103,17 @@ public class ProductRepositoryImpl implements ProductRepository {
         }catch(Exception e){
             return null;
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Transactional
+    public List<Product> searchName(String name){
+        Criteria crit = sessionFactory.getCurrentSession().createCriteria(Product.class);
+        crit.add(Restrictions.like("name", name, MatchMode.START));
+        List<Product> product = crit.list();
+        if(product.isEmpty())throw new NoProductsFoundUnderSearchTerm();
+        else return product;
+
     }
 
 
