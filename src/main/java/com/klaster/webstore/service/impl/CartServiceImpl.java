@@ -2,6 +2,7 @@ package com.klaster.webstore.service.impl;
 
 import com.klaster.webstore.domain.Cart;
 import com.klaster.webstore.domain.repository.CartRepository;
+import com.klaster.webstore.exception.InvalidCartException;
 import com.klaster.webstore.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,5 +27,13 @@ public class CartServiceImpl implements CartService {
     }
     public void delete(String cartId) {
         cartRepository.delete(cartId);
+    }
+
+    public Cart validate(String cartId) {
+        Cart cart = cartRepository.read(cartId);
+        if(cart==null || cart.getCartItems().size()==0) {
+            throw new InvalidCartException(cartId);
+        }
+        return cart;
     }
 }
