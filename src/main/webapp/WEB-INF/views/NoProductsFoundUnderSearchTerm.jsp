@@ -7,7 +7,7 @@
 <section>
     <div class="container">
         <p>
-        <h1 class="alert alert-danger"> Brak produktów wskazanej nazwie.</h1>
+        <h1 class="alert alert-warning"> Brak produktów wskazanej nazwie.</h1>
         </p>
     </div>
 </section>
