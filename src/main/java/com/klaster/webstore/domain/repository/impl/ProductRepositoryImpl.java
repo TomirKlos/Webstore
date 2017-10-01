@@ -44,8 +44,8 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public void delete(Product product) {
-        sessionFactory.getCurrentSession().createQuery("DELETE FROM products WHERE productId = "+product.getProductId()).executeUpdate();
+    public void delete(Product product) {               //dodalem product zamaist products
+        sessionFactory.getCurrentSession().createQuery("DELETE FROM product WHERE productId = "+product.getProductId()).executeUpdate();
     }
 
     @SuppressWarnings("unchecked")
