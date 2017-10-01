@@ -7,6 +7,9 @@ import com.klaster.webstore.exception.ProductNotFoundException;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Created by MSI DRAGON on 2017-10-01.
@@ -32,6 +35,12 @@ public class ProductThumbnailRepositoryImpl implements ProductThumbnailRepositor
 
     @Override
     public void delete(ProductThumbnail productThumbnail) {
-        sessionFactory.getCurrentSession().createQuery("DELETE FROM productThumbnail WHERE productId = "+productThumbnail.getProductId()).executeUpdate();
+        sessionFactory.getCurrentSession().createQuery("DELETE FROM product_thumbnails WHERE productId = "+productThumbnail.getProductId()).executeUpdate();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Transactional
+    public List<ProductThumbnail> getAllProducts() {
+        return (List<ProductThumbnail>) sessionFactory.getCurrentSession().createCriteria(ProductThumbnail.class).list();
     }
 }

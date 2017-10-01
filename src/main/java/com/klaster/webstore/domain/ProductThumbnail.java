@@ -18,8 +18,10 @@ public class ProductThumbnail {
     @MapsId
     private Product product;
 
-    public ProductThumbnail() {
-        super();
+    public ProductThumbnail() {super();}
+
+    public ProductThumbnail(Product product) {
+        this.product = product;
     }
 
     public ProductThumbnail(String base64Image, Product product) {
