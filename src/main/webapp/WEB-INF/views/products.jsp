@@ -4,6 +4,14 @@
 <script src="//ressio.github.io/lazy-load-xt/dist/jquery.lazyloadxt.js"></script>
 <script src="//raw.githubusercontent.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.js"></script>
 <link rel="stylesheet" href="//ressio.github.io/lazy-load-xt/dist/jquery.lazyloadxt.fadein.css">
+<style>
+    #description {
+        white-space: nowrap;
+        width: 17em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
 <div class="row">
     <c:forEach items="${products}" var="product">
         <div class="col-sm-3">
@@ -16,6 +24,7 @@
                         <c:if test="${product.productId eq productThumbnail.productId}">
                                 <c:choose>
                                     <c:when test="${empty productThumbnail.base64Image}">
+                                        <img class="img-responsive" id="profileImage" data-src="http://v-ie.uek.krakow.pl/~s193340/noImageAvailable.png" style = "width:100%"/>
                                     </c:when>
                                     <c:otherwise>
                                         <img class="img-responsive" id="profileImage" data-src="data:image/jpg;base64,${productThumbnail.base64Image}" style = "width:100%"/>
@@ -25,7 +34,7 @@
                     </c:forEach>
                 </div>
                 <div class="panel-footer">
-                    <p>${product.description}</p>
+                    <p id="description">${product.description}</p>
                     <p>${product.unitPrice} PLN</p>
                     <p>Liczba sztuk w magazynie:${product.unitsInStock}</p>
 
