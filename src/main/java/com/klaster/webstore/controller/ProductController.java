@@ -2,15 +2,21 @@ package com.klaster.webstore.controller;
 
 import com.klaster.webstore.domain.Product;
 import com.klaster.webstore.domain.ProductImage;
+import com.klaster.webstore.domain.ProductPicture;
+import com.klaster.webstore.domain.ProductThumbnail;
 import com.klaster.webstore.domain.repository.ProductRepository;
 import com.klaster.webstore.exception.NoProductsFoundUnderCategoryException;
 import com.klaster.webstore.exception.NoProductsFoundUnderSearchTerm;
 import com.klaster.webstore.exception.ProductNotFoundException;
+import com.klaster.webstore.service.ProductPictureService;
 import com.klaster.webstore.service.ProductService;
+import com.klaster.webstore.service.ProductThumbnailService;
 import com.klaster.webstore.validator.ProductValidator;
 import com.klaster.webstore.validator.UnitsInStockValidator;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.geometry.Positions;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
@@ -32,12 +38,14 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
 import java.io.*;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by MSI DRAGON on 2017-09-08.
@@ -49,11 +57,16 @@ public class ProductController {
     @Autowired
     private ProductService productService;
     @Autowired
+    private ProductThumbnailService productThumbnailService;
+    @Autowired
+    private ProductPictureService productPictureService;
+    @Autowired
     private ProductValidator productValidator;
 
     @RequestMapping
     public String list(Model model) {
         model.addAttribute("products", productService.getAllProducts());
+        model.addAttribute("productThumbnails", productThumbnailService.getAllProducts());
         return "products";
     }
 
@@ -61,16 +74,6 @@ public class ProductController {
     public String searchName(@RequestParam("search") String search, Model model){
         model.addAttribute("products", productService.searchName(search));
         return "products";
-    }
-
-
-    @RequestMapping(value="/insert", method= RequestMethod.GET)
-    public String insert() {
-        productService.create(new Product("Laptop1", (BigDecimal.valueOf(22.0)),"Produkt jaki jest kazdy widzi", "Corpo", "Laptop", 5, 0, false, "nowy"));
-        productService.create(new Product("Telefon2", (BigDecimal.valueOf(22.0)),"Produkt jaki jest kazdy widzi", "Corpo", "Telefon", 5, 0, false, "nowy"));
-        productService.create(new Product("Tablet3", (BigDecimal.valueOf(22.0)),"Produkt jaki jest kazdy widzi", "Corpo", "Tablet", 5, 0, false, "nowy"));
-
-        return "redirect:/products";
     }
 
     @RequestMapping(value="/put", method= RequestMethod.GET)
@@ -105,6 +108,7 @@ public class ProductController {
     @RequestMapping("/product")
     public String getProductById(@RequestParam("id") long productId, Model model) {
         model.addAttribute("product", productService.read(productId));
+        model.addAttribute("productPicture", productPictureService.read(productId));
         return "product";
     }
 
@@ -135,26 +139,33 @@ public class ProductController {
         if (suppressedFields.length > 0) {
             throw new RuntimeException("Próba wiązania niedozwolonych pól: " + StringUtils.arrayToCommaDelimitedString(suppressedFields));
         }
+        ProductThumbnail productThumbnail = new ProductThumbnail(newProduct);
+        ProductPicture productPicture = new ProductPicture(newProduct);
         MultipartFile productImage = image.getProductImage();
-       // String rootDirectory = request.getSession().getServletContext().getRealPath("/");
         if (productImage!=null && !productImage.isEmpty()) {
             try {
-                newProduct.setImage(productImage.getBytes()); //todo to w sumie nie potrzebne
-                byte[] encoded = Base64.getEncoder().encode(newProduct.getImage());
-                newProduct.setBase64Image(new String(encoded));
-               // productImage.transferTo(new File(rootDirectory+"resources\\images\\"+ newProduct.getProductId() + ".png"));
-            } catch (Exception e) {
+                InputStream is = image.getProductImage().getInputStream();
+                BufferedImage img = Thumbnails.of(is)
+                        //.size(300,300)
+                        .crop(Positions.CENTER)
+                        .size(400, 300)
+                        .asBufferedImage();
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ImageIO.write(img, "jpg", baos);
+                byte[] imageBytess = Base64.getEncoder().encode(baos.toByteArray());
+                productThumbnail.setBase64Image(new String(imageBytess));
+
+                byte[] encoded = Base64.getEncoder().encode(image.getProductImage().getBytes());
+                productPicture.setBase64Image(new String(encoded));
+
+            } catch(Exception e) {
                 throw new RuntimeException("Niepowodzenie podczas próby zapisu obrazka produktu", e);
             }
         }
-
-      //  img = Thumbnails.of(img)
-         //       .size(200,200)
-         //       .asBufferedImage();
-
         productService.create(newProduct);
+        productThumbnailService.create(productThumbnail);
+        productPictureService.create(productPicture);
         return "redirect:/products";
-        //todo dodac miniatury zdjec zamiast plenych obrazkow do strony products
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
