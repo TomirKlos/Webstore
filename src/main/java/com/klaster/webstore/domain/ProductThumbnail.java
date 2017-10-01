@@ -1,5 +1,8 @@
 package com.klaster.webstore.domain;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 
 /**
@@ -15,6 +18,7 @@ public class ProductThumbnail {
     private String base64Image;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @MapsId
     private Product product;
 
