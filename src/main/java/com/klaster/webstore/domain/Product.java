@@ -35,11 +35,7 @@ public class Product implements Serializable{
     private String conditionProduct;
     @Transient
     private MultipartFile productImage;
-    @Lob
-    @Column(columnDefinition="mediumblob")
-    private byte[] image;
-    @Column(columnDefinition = "MEDIUMTEXT")
-    private String base64Image;
+
 
 
     public Product() {
@@ -64,33 +60,6 @@ public class Product implements Serializable{
         this.unitsInOrder = unitsInOrder;
         this.discontinued = discontinued;
         this.conditionProduct = conditionProduct;
-    }
-
-    public Product(String name, BigDecimal unitPrice, String description, String manufacturer, String category, long unitsInStock, long unitsInOrder, boolean discontinued, String conditionProduct, byte[] image ) {
-        this.name = name;
-        this.unitPrice = unitPrice;
-        this.description = description;
-        this.manufacturer = manufacturer;
-        this.category = category;
-        this.unitsInStock = unitsInStock;
-        this.unitsInOrder = unitsInOrder;
-        this.discontinued = discontinued;
-        this.conditionProduct = conditionProduct;
-        this.image = image;
-    }
-
-    public Product(String name, BigDecimal unitPrice, String description, String manufacturer, String category, long unitsInStock, long unitsInOrder, boolean discontinued, String conditionProduct, byte[] image, String base64Image ) {
-        this.name = name;
-        this.unitPrice = unitPrice;
-        this.description = description;
-        this.manufacturer = manufacturer;
-        this.category = category;
-        this.unitsInStock = unitsInStock;
-        this.unitsInOrder = unitsInOrder;
-        this.discontinued = discontinued;
-        this.conditionProduct = conditionProduct;
-        this.image = image;
-        this.base64Image = base64Image;
     }
 
 
@@ -181,21 +150,6 @@ public class Product implements Serializable{
         this.productImage = productImage;
     }
 
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
-
-    public String getBase64Image() {
-        return base64Image;
-    }
-
-    public void setBase64Image(String base64Image) {
-        this.base64Image = base64Image;
-    }
 
     @Override
     public boolean equals(Object o) {
