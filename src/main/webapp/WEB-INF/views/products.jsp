@@ -12,13 +12,17 @@
                     <h3 class="panel-title">${product.name}</h3>
                 </div>
                 <div class="panel-body">
-                    <c:choose>
-                        <c:when test="${empty product.base64Image}">
-                        </c:when>
-                        <c:otherwise>
-                            <img class="img-responsive" id="profileImage" data-src="data:image/jpg;base64,${product.base64Image}" style = "width:100%"/>
-                        </c:otherwise>
-                    </c:choose>
+                    <c:forEach items="${productThumbnails}" var="productThumbnail">
+                        <c:if test="${product.productId eq productThumbnail.productId}">
+                                <c:choose>
+                                    <c:when test="${empty productThumbnail.base64Image}">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img class="img-responsive" id="profileImage" data-src="data:image/jpg;base64,${productThumbnail.base64Image}" style = "width:100%"/>
+                                    </c:otherwise>
+                                </c:choose>
+                        </c:if>
+                    </c:forEach>
                 </div>
                 <div class="panel-footer">
                     <p>${product.description}</p>

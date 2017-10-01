@@ -31,10 +31,10 @@
         <div class="col-md-5">
 
             <c:choose>
-                <c:when test="${empty product.base64Image}">
+                <c:when test="${empty productPicture.base64Image}">
                 </c:when>
                 <c:otherwise>
-                    <img id="profileImage" src="data:image/jpg;base64,${product.base64Image}" alt="image" style = "width:100%"/>
+                    <img id="profileImage" src="data:image/jpg;base64,${productPicture.base64Image}" alt="image" style = "width:100%"/>
                 </c:otherwise>
             </c:choose>
 
