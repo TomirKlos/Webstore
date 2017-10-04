@@ -1,34 +1,43 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Zaloguj się</h3>
-                </div>
-                <div class="panel-body">
-                    <c:if test="${not empty error}">
-                    <div class="alert alert-danger">
-                        <spring:message code="AbstractUserDetailsAuthenticationProvider.badCredentials"/><br />
-                    </div>
+<div id="mainWrapper">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-form">
+                <c:url var="loginUrl" value="/login" />
+                <form action="${loginUrl}" method="post" class="form-horizontal">
+                    <c:if test="${param.error != null}">
+                        <div class="alert alert-danger">
+                            <p>Niepoprawny login/hasło.</p>
+                        </div>
                     </c:if>
-                    <form action="<c:url value="/j_spring_security_check"></c:url>" method="post">
-                        <input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
-                        <fieldset>
-                            <div class="form-group">
-                                <input class="form-control" placeholder="Nazwaużytkownika" name='j_username' type="text" >
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" placeholder="Hasło" name='j_password' type="password" value="">
-                            </div>
-                            <input class="btn btn-lg btn-success btn-block" type="submit" value="Zaloguj się">
-                        </fieldset>
-                    </form>
-                </div>
+                    <c:if test="${param.logout != null}">
+                        <div class="alert alert-success">
+                            <p>Zostałeś wylogowany pomyślnie.</p>
+                        </div>
+                    </c:if>
+                    <div class="input-group input-sm">
+                        <label class="input-group-addon" for="username"><i class="fa fa-user"></i></label>
+                        <input type="text" class="form-control" id="username" name="ssoId" placeholder="Enter Username" required>
+                    </div>
+                    <div class="input-group input-sm">
+                        <label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
+                    </div>
+                    <div class="input-group input-sm">
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="rememberme" name="remember-me"> Zapamiętaj mnie</label>
+                        </div>
+                    </div>
+                    <input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />
+
+                    <div class="form-actions">
+                        <input type="submit"
+                               class="btn btn-block btn-primary btn-default" value="Zaloguj">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
