@@ -4,19 +4,20 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
  http://www.springframework.org/schema/beans/spring-beans.xsd
  http://www.springframework.org/schema/context
  http://www.springframework.org/schema/context/spring-context-4.0.xsd
  http://www.springframework.org/schema/mvc
  http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
-http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.3.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.3.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="10240000"/>
     </bean>
 
     <mvc:resources location="/resources/" mapping="/resource/**"/>
-    <mvc:annotation-driven enable-matrix-variables="true" validator="validator"/>
+    <mvc:annotation-driven enable-matrix-variables="true" validator="validator" conversion-service="conversionService"/>
     <context:component-scan base-package="com.klaster.webstore" />
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/" />
@@ -26,7 +27,7 @@ http://www.springframework.org/schema/webflow-config http://www.springframework.
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:3306/webstore" />
+        <property name="url" value="jdbc:mysql://localhost:3306/webstore?zeroDateTimeBehavior=convertToNull" />
         <property name="username" value="root" />
         <property name="password" value="1234" />
     </bean>
@@ -58,8 +59,10 @@ http://www.springframework.org/schema/webflow-config http://www.springframework.
 
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
 
+
     <bean id= "messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basename" value="messages"/>
+        <property name="defaultEncoding" value="UTF-8"/>
     </bean>
 
     <mvc:interceptors>
@@ -84,7 +87,7 @@ http://www.springframework.org/schema/webflow-config http://www.springframework.
         </bean>
     </mvc:interceptors>
 
-    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+    <bean id="validator" primary="true" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <property name="validationMessageSource" ref="messageSource" />
     </bean>
 
@@ -121,6 +124,14 @@ http://www.springframework.org/schema/webflow-config http://www.springframework.
             <list>
                 <value>/WEB-INF/tiles/definition/tile-definition.xml</value>
             </list>
+        </property>
+    </bean>
+
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean" >
+        <property name="converters">
+            <set>
+                <bean class="com.klaster.webstore.converter.RoleToUserProfileConverter"/>
+            </set>
         </property>
     </bean>
 
