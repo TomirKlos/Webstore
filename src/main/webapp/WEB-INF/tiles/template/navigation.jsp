@@ -70,7 +70,7 @@
             <li><a href="<spring:url value="/products"/>">Strona główna</a></li>
             <li><a href="<spring:url value="/products"/>">Produkty</a></li>
             <li><a href="<spring:url value="/products/add"/>">Dodaj produkt</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="<spring:url value="/list"/>">Uzytkownicy</a></li>
         </ul>
 
         <form class="navbar-form navbar-left" action="${pageContext.request.contextPath}/products/searchByName">
@@ -127,27 +127,28 @@
                 <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
             </div>
             <div class="modal-body" style="padding:40px 50px;">
-                <form role="form" action="<c:url value="/j_spring_security_check"></c:url>" method="post">
-                    <input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
+                <form role="form" action="<c:url value="/login"></c:url>" method="post">
+
                     <div class="form-group">
-                        <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
-                        <input class="form-control" placeholder="Nazwaużytkownika" name='j_username' type="text" placeholder="Enter email" id="usrname">
+                        <label for="usrname"><span class="glyphicon glyphicon-user"></span> Nazwa użytkownika</label>
+                        <input class="form-control" placeholder="Nazwa użytkownika" name='ssoId' type="text" placeholder="Enter email" id="usrname">
                     </div>
                     <div class="form-group">
-                        <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-                        <input class="form-control" placeholder="Hasło" name='j_password' type="password" value="" placeholder="Enter password" id="psw">
+                        <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Hasło</label>
+                        <input class="form-control" placeholder="Hasło" name='password' type="password" value="" placeholder="Enter password" id="psw">
                     </div>
                     <div class="checkbox">
-                        <label><input type="checkbox" value="" checked>Remember me</label>
+                        <label><input type="checkbox" value="" checked>Zapamiętaj mnie</label>
                     </div>
+                    <input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
                     <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Anuluj</button>
 
-                <p>Not a member? <a href="#">Sign Up</a></p>
-                <p>Forgot <a href="#">Password?</a></p>
+                <p>Nie masz konta? <a href="#">Zarejestruj się</a></p>
+                <p>Zapomniałeś <a href="#">hasła?</a></p>
             </div>
 
                 </c:otherwise>
