@@ -28,7 +28,7 @@ public class Product implements Serializable{
     private String description;
     private String manufacturer;
     private String category;
-    @Min(value=1, message="Min.Product.unitPrice.validation}")
+    @Min(value=1, message="{Min.Product.unitsInStock.validation}")
     private long unitsInStock;
     private long unitsInOrder;
     private boolean discontinued;
