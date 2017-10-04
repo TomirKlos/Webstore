@@ -92,4 +92,39 @@
         <put-attribute name="content" value="/WEB-INF/views/NoProductsFoundUnderSearchTerm.jsp" />
     </definition>
 
+    <definition name="userslist" extends="baseLayout">
+        <put-attribute name="title" value="Użytkownicy" />
+        <put-attribute name="heading" value="Zarządzanie użytkownikami" />
+        <put-attribute name="tagline" value="Zarządzanie użytkownikami" />
+        <put-attribute name="content" value="/WEB-INF/views/userslist.jsp" />
+    </definition>
+
+    <definition name="registration" extends="baseLayout">
+        <put-attribute name="title" value="Rejestracja użytkownika" />
+        <put-attribute name="heading" value="Dodawanie nowego użytkownika" />
+        <put-attribute name="tagline" value="" />
+        <put-attribute name="content" value="/WEB-INF/views/registration.jsp" />
+    </definition>
+
+    <definition name="accessDenied" extends="baseLayout">
+        <put-attribute name="title" value="Nieuatoryzowany dostęp" />
+        <put-attribute name="heading" value="" />
+        <put-attribute name="tagline" value="" />
+        <put-attribute name="content" value="/WEB-INF/views/accessDenied.jsp" />
+    </definition>
+
+    <definition name="login" extends="baseLayout">
+        <put-attribute name="title" value="Logowanie" />
+        <put-attribute name="heading" value="" />
+        <put-attribute name="tagline" value="" />
+        <put-attribute name="content" value="/WEB-INF/views/login.jsp" />
+    </definition>
+
+    <definition name="registrationsuccess" extends="baseLayout">
+        <put-attribute name="title" value="Zarejestrowano użytkownika" />
+        <put-attribute name="heading" value="" />
+        <put-attribute name="tagline" value="" />
+        <put-attribute name="content" value="/WEB-INF/views/registrationsuccess.jsp" />
+    </definition>
+
 </tiles-definitions>
