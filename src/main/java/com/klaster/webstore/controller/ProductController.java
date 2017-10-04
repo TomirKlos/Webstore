@@ -61,6 +61,7 @@ public class ProductController {
     @Autowired
     private ProductPictureService productPictureService;
     @Autowired
+    @Qualifier("productValidator")
     private ProductValidator productValidator;
 
     @RequestMapping
@@ -72,7 +73,14 @@ public class ProductController {
 
     @RequestMapping(value="/searchByName", method= RequestMethod.GET)
     public String searchName(@RequestParam("search") String search, Model model){
-        model.addAttribute("products", productService.searchName(search));
+        ArrayList<Product> productslist = (ArrayList<Product>) productService.searchName(search);
+        ArrayList<ProductThumbnail> thumbnails = new ArrayList<ProductThumbnail>();
+        productslist.forEach((product) -> {
+            System.out.println(product.getProductId());
+            thumbnails.add(productThumbnailService.read(product.getProductId()));
+        });
+        model.addAttribute("products", productslist);
+        model.addAttribute("productThumbnails", thumbnails);
         return "products";
     }
 
@@ -120,7 +128,7 @@ public class ProductController {
         model.addAttribute("products", productService.getProductByCategoryPriceManufacturer(productCategory, low, high, manufacturer));
         return "products";
     }
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+  //  @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String getAddNewProductForm(Model model) {
         Product newProduct = new Product();
@@ -129,7 +137,7 @@ public class ProductController {
         model.addAttribute("productImage", productImage);
         return "addProduct";
     }
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+   // @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String processAddNewProductForm(@ModelAttribute("newProduct") @Valid Product newProduct, BindingResult result, @ModelAttribute("productImage") ProductImage image, HttpServletRequest request) throws IOException {
         if(result.hasErrors()) {
@@ -213,5 +221,10 @@ public class ProductController {
   //  public void initBinder(WebDataBinder binder) {
    //
   //  }
+
+
+
+
+
 
 }
