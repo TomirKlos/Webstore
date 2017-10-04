@@ -1,7 +1,9 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-
+<script src="//ressio.github.io/lazy-load-xt/dist/jquery.lazyloadxt.js"></script>
+<script src="//raw.githubusercontent.com/ressio/lazy-load-xt/master/dist/jquery.lazyloadxt.js"></script>
+<link rel="stylesheet" href="//ressio.github.io/lazy-load-xt/dist/jquery.lazyloadxt.fadein.css">
 
 <script src="/resource/js/controllers.js"></script>
 
@@ -32,9 +34,10 @@
 
             <c:choose>
                 <c:when test="${empty productPicture.base64Image}">
+                    <img class="img-responsive" id="profileImage" data-src="http://v-ie.uek.krakow.pl/~s193340/noImageAvailable.png" style = "width:100%"/>
                 </c:when>
                 <c:otherwise>
-                    <img id="profileImage" src="data:image/jpg;base64,${productPicture.base64Image}" alt="image" style = "width:100%"/>
+                    <img class="img-responsive" id="profileImage" data-src="data:image/jpg;base64,${productPicture.base64Image}" alt="image" style = "width:100%"/>
                 </c:otherwise>
             </c:choose>
 
