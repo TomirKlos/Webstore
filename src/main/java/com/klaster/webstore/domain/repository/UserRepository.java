@@ -15,6 +15,8 @@ public interface UserRepository {
 
     void save(User user);
 
+    void saveCustomerAccount(User user);
+
     void deleteBySSO(String sso);
 
     List<User> findAllUsers();

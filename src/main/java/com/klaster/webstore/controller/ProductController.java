@@ -154,7 +154,6 @@ public class ProductController {
             try {
                 InputStream is = image.getProductImage().getInputStream();
                 BufferedImage img = Thumbnails.of(is)
-                        //.size(300,300)
                         .crop(Positions.CENTER)
                         .size(400, 300)
                         .asBufferedImage();

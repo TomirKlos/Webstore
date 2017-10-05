@@ -1,8 +1,12 @@
 package com.klaster.webstore.service.impl;
 
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.klaster.webstore.domain.User;
+import com.klaster.webstore.domain.UserProfile;
+import com.klaster.webstore.domain.UserProfileType;
 import com.klaster.webstore.domain.repository.UserRepository;
 import com.klaster.webstore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +42,18 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
+
+    public void saveCustomerAccount(User user) {
+        Set profile = new LinkedHashSet<UserProfile>();
+        UserProfile up = new UserProfile();
+        up.setId(1);
+        up.setType("USER");
+        profile.add(up);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setUserProfiles(profile);
+        userRepository.save(user);
+    }
+
 
     public void updateUser(User user) {
         User entity = userRepository.findById(user.getId());

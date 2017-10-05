@@ -174,5 +174,35 @@ public class UserController {
         return authenticationTrustResolver.isAnonymous(authentication);
     }
 
+    @RequestMapping(value="/register", method = RequestMethod.GET)
+    public String registerByUser(ModelMap model) {
+        User user = new User();
+        model.addAttribute("user", user);
+        model.addAttribute("edit", false);
+       // model.addAttribute("loggedinuser", getPrincipal());
+        return "register";
+    }
+
+    @RequestMapping(value = { "/register" }, method = RequestMethod.POST)
+    public String saveUserAccount(@Valid User user, BindingResult result, ModelMap model) {
+
+        if (result.hasErrors() || result==null) {
+            return "register";
+        }
+
+        if(!userService.isUserSSOUnique(user.getId(), user.getSsoId())){
+            FieldError ssoError =new FieldError("user","ssoId",messageSource.getMessage("non.unique.ssoId", new String[]{user.getSsoId()}, Locale.getDefault()));
+            result.addError(ssoError);
+            return "register";
+        }
+
+        userService.saveCustomerAccount(user);
+
+        model.addAttribute("success", "Użytkownik " + user.getFirstName() + " "+ user.getLastName() + " został zarejestrowany.");
+        model.addAttribute("loggedinuser", getPrincipal());
+        return "registrationsuccess";
+    }
+
+
 
 }

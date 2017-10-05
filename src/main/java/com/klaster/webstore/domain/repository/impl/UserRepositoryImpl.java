@@ -55,6 +55,10 @@ public class UserRepositoryImpl extends AbstractRepository<Integer, User> implem
         persist(user);
     }
 
+    public void saveCustomerAccount(User user)  {
+        persist(user);
+    }
+
     public void deleteBySSO(String sso) {
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("ssoId", sso));
