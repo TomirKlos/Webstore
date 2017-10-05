@@ -38,6 +38,7 @@
                                class="btn btn-block btn-primary btn-default" value="Zaloguj">
                     </div>
                 </form>
+                <br><p>Nie masz konta? <a href="<c:url value='/register' />">Zarejestruj się</a></p>
             </div>
         </div>
     </div>

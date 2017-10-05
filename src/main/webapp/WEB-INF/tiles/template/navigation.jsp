@@ -147,7 +147,7 @@
             <div class="modal-footer">
                 <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Anuluj</button>
 
-                <p>Nie masz konta? <a href="#">Zarejestruj się</a></p>
+                <p>Nie masz konta? <a href="<spring:url value="/register"/>">Zarejestruj się</a></p>
                 <p>Zapomniałeś <a href="#">hasła?</a></p>
             </div>
 

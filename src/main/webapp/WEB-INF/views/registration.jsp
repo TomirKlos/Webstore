@@ -7,7 +7,7 @@
 <div class="generic-container">
     <%@include file="authheader.jsp" %>
 
-    <div class="well lead">Formularz rejestraji użytkownika</div>
+    <div class="well lead">Formularz rejestracji użytkownika</div>
     <form:form method="POST" modelAttribute="user" class="form-horizontal">
         <form:input type="hidden" path="id" id="id"/>
 

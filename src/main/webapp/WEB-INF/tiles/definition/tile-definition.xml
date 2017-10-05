@@ -127,4 +127,12 @@
         <put-attribute name="content" value="/WEB-INF/views/registrationsuccess.jsp" />
     </definition>
 
+    <definition name="register" extends="baseLayout">
+        <put-attribute name="title" value="Rejestracja użytkownika" />
+        <put-attribute name="heading" value="Dodawanie nowego użytkownika" />
+        <put-attribute name="tagline" value="" />
+        <put-attribute name="content" value="/WEB-INF/views/register.jsp" />
+    </definition>
+
+
 </tiles-definitions>
