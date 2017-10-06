@@ -189,7 +189,6 @@ public class UserController {
         if (result.hasErrors() || result==null) {
             return "register";
         }
-
         if(!userService.isUserSSOUnique(user.getId(), user.getSsoId())){
             FieldError ssoError =new FieldError("user","ssoId",messageSource.getMessage("non.unique.ssoId", new String[]{user.getSsoId()}, Locale.getDefault()));
             result.addError(ssoError);
