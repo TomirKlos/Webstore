@@ -4,11 +4,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css">
 <link
         href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
         rel="stylesheet"  type='text/css'>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js"></script>
 <style>
     body, html{
         height: 100%;
@@ -75,7 +76,135 @@
         text-align: center;
     }
     #success_message{ display: none;}
+
 </style>
+<script>
+    $(document).ready(function() {
+        $('#registerForm').bootstrapValidator({
+            // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                ssoId: {
+                    validators: {
+                        stringLength: {
+                            min: 5,
+                            max: 20,
+                            message: 'Login musi być w przedziale 5-20 znaków'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9]+$/,
+                            message: 'Nazwa użytkownika może składać się jedynie ze znaków alfanumerycznych'
+                        },
+                        notEmpty: {
+                            message: 'Proszę podać swoją nazwę użytkownika'
+                        }
+                    }
+                },
+                firstName: {
+                    validators: {
+                        stringLength: {
+                            min: 2,
+                            message: 'Imię zbyt krótkie'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z]+$/,
+                            message: 'Imię może składać się jedynie ze znaków alfabetu'
+                        },
+                        notEmpty: {
+                            message: 'Proszę podać swoje imię'
+                        }
+                    }
+                },
+                lastName: {
+                    validators: {
+                        stringLength: {
+                            min: 2,
+                            message: 'Proszę podać swoje Nazwisko'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z]+$/,
+                            message: 'Nazwisko może składać się jedynie ze znaków alfabetu'
+                        },
+                        notEmpty: {
+                            message: 'Proszę podać swoje Nazwisko'
+                        }
+                    }
+                },
+                password: {
+                    validators: {
+                        stringLength: {
+                            min: 5,
+                            max: 20,
+                            message: 'Hasło musi składać się z minimum 5 znaków'
+                        },
+                        notEmpty: {
+                            message: 'Proszę podać hasło'
+                        }
+                    }
+                },
+                confirm: {
+                    validators: {
+                        stringLength: {
+                            min: 5,
+                            max: 20,
+                        },
+                        identical: {
+                            field: 'password',
+                            message: 'Hasła nie są identyczne'
+                        },
+                        notEmpty: {
+                            message: 'Proszę wpisać hasło jeszcze raz'
+                        }
+                    }
+                },
+                email: {
+                    validators: {
+                        stringLength: {
+                            min: 5,
+                            max: 100,
+                            message: 'Adres e-mail musi składać sie z mniej niż 100 znaków'
+                        },
+                        notEmpty: {
+                            message: 'Proszę wpisać adres e-mail'
+                        },
+                        emailAddress: {
+                            message: 'Proszę wpisać poprawny adres e-mail'
+                        }
+                    }
+                },
+                acceptTerms: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Zaakceptuj regulamin'
+                        }
+                    }
+                },
+            }
+        })
+            .on('success.form.bv', function(e) {
+                $('#success_message').slideDown({ opacity: "show" }, "slow") // Do something ...
+                $('#registerForm').data('bootstrapValidator').resetForm();
+
+                // Prevent form submission
+                e.preventDefault();
+
+                // Get the form instance
+                var $form = $(e.target);
+
+                // Get the BootstrapValidator instance
+                var bv = $form.data('bootstrapValidator');
+
+                // Use Ajax to submit form data
+                $.post($form.attr('action'), $form.serialize(), function(result) {
+                    console.log(result);
+                }, 'json');
+            });
+    });
+</script>
 <div class="container">
     <div class="row main">
         <div class="panel-heading">
@@ -98,7 +227,7 @@
                                     <form:input name="username" type="text" path="ssoId" id="ssoId" class="form-control input-sm" disabled="true"/>
                                 </c:when>
                                 <c:otherwise>
-                                    <form:input type="text" path="ssoId" id="ssoId" class="form-control input-sm" placeholder="Wpisz Login" />
+                                    <form:input name="username" type="text" path="ssoId" id="ssoId" class="form-control input-sm" placeholder="Wpisz Login" />
                                     <div class="has-error">
                                         <form:errors path="ssoId" class="help-inline"/>
                                     </div>
@@ -166,7 +295,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                            <input type="password" class="form-control" name="username" id="confirm"  placeholder="Potwierdź hasło"/>
+                            <input type="password" class="form-control" name="confirm" id="confirm"   placeholder="Potwierdź hasło"/>
                         </div>
                     </div>
                 </div>
@@ -176,8 +305,14 @@
                 <div class="has-error">
                     <form:errors path="userProfiles" class="help-inline"/>
                 </div>
+                <div class="form-group">
+                    <div class="col-lg-11 col-lg-offset-1">
+                        <div class="checkbox">
+                            <input type="checkbox" name="acceptTerms" /> Akceptuję regulamin
+                        </div>
+                    </div>
+                </div>
 
-                <div class="form-group ">
 
                     <button type="submit" href="<c:url value='/register' />" class="btn btn-primary btn-lg btn-block login-button">Zarejestruj!</button>
                 </div>
