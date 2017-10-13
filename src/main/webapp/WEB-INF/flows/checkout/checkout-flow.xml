@@ -21,7 +21,7 @@
         <transition on="backToCollectShippingDetail" to="collectShippingDetail" />
     </view-state>
     <action-state id="processOrder">
-        <evaluate expression="orderServiceImpl.saveOrder(order)" result="order.orderId"/>
+             <evaluate expression="orderServiceImpl.processOrder(order)" result="order.orderId"/>
         <transition to="thankCustomer" />
     </action-state>
     <view-state id="InvalidCartWarning">

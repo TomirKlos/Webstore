@@ -17,13 +17,9 @@ public class RoleToUserProfileConverter implements Converter<Object, UserProfile
 
     @Autowired
     UserProfileService userProfileService;
-    /**
-     * Gets UserProfile by Id
-     * @see //org.springframework.core.convert.converter.Converter#convert(java.lang.Object)
-     */
+
     @Override
     public UserProfile convert(Object element) {
-        System.out.println("Jestem w converteerze"); ///////////////////////////
         Integer id = Integer.parseInt((String)element);
         UserProfile profile= userProfileService.findById(id);
         logger.info("Profile : {}",profile);

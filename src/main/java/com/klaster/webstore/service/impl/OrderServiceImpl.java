@@ -34,9 +34,24 @@ public class OrderServiceImpl implements OrderService {
         productById.setUnitsInStock(productById.getUnitsInStock() - count);
     }
 
+    @Transactional
+    public Long processOrder(Order order) {
+        order.getCart().getCartItems().forEach((k, v) -> {
+            Product productById = productRepository.read(v.getProduct().getProductId());
+            if (productById.getUnitsInStock() < v.getQuantity()) {
+                throw new IllegalArgumentException("Zbyt mało towaru. Obecna liczba sztuk w magazynie: " +  v.getProduct().getUnitsInStock());
+            }
+            productById.setUnitsInStock(productById.getUnitsInStock() - v.getQuantity());
+        });
+        Long orderId = orderRepository.saveOrder(order);
+        cartService.delete(order.getCart().getCartId());
+        return orderId;
+    }
+
     public Long saveOrder(Order order) {
         Long orderId = orderRepository.saveOrder(order);
         cartService.delete(order.getCart().getCartId());
+
         return orderId;
     }
 }
