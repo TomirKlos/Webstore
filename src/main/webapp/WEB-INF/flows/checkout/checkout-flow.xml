@@ -23,15 +23,20 @@
     <action-state id="processOrder">
              <evaluate expression="orderServiceImpl.processOrder(order)" result="order.orderId"/>
         <transition to="thankCustomer" />
+        <transition on-exception="java.lang.IllegalArgumentException" to="invalidQuantity" />
     </action-state>
     <view-state id="InvalidCartWarning">
         <transition to="endState"/>
+    </view-state>
+    <view-state id="InvalidQuantityAmount">
+        <transition to="invalidQuantity"/>
     </view-state>
     <view-state id="thankCustomer" model="order">
         <transition to="endState"/>
     </view-state>
     <end-state id="endState"/>
     <end-state id="cancelCheckout" view = "checkOutCancelled.jsp"/>
+    <end-state id="invalidQuantity" view = "InvalidQuantityAmount.jsp"/>
     <global-transitions>
         <transition on = "cancel" to="endState" />
     </global-transitions>
